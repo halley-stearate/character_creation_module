@@ -65,16 +65,14 @@ def choice_char_class(char_name: str) -> Character:
     классом персонажа
     """
 
-    game_classes = {'warrior': Warrior, 'mage': Mage, 'healer': Healer}
+    game_classes = {'warior': Warrior, 'mage': Mage, 'healer': Healer}
 
     approve_choice = None
 
     while approve_choice != 'y':
         selected_class = input('Введи название персонажа, '
                                'за которого хочешь играть: Воитель - warrior, '
-                               'Маг - mage, Лекарь - healer: ').lower()
-        if selected_class not in game_classes:
-            print('Такого персонажа нет, выбери еще раз.')
+                               'Маг - mage, Лекарь - healer: ')
         char_class: Character = game_classes[selected_class](char_name)
 
         print(char_class)
@@ -89,13 +87,12 @@ def start_training(character):
     Принимает на вход имя и класс персонажа.
     Возвращает сообщения о результатах цикла тренировки персонажа
     """
-    if character.__class__.__name__.lower() == 'warrior':
-        print(f'{character.name}, ты Воитель - великий мастер ближнего бояю')
-    if character.__class__.__name__.lower() == 'mage':
-        print(f'{character.name}, ты Маг - превосходный укротитель стихий.')
-    if character.__class__.__name__.lower() == 'healer':
-        print(f'{character.name},ты Лекарь - чародей,способный исцелять раны.')
-
+    if character == 'warrior':
+        print(f'{character}, ты Воитель - великий мастер ближнего бояю')
+    if character == 'mage':
+        print(f'{character}, ты Маг - превосходный укротитель стихий.')
+    if character == 'healer':
+        print(f'{character},ты Лекарь - чародей, способный исцелять раны.')
     print('Потренируйся управлять своими навыками.')
     print('Введи одну из команд: attack - чтобы атаковать противника'
           'defence - чтобы блокировать атаку противника или '
@@ -103,26 +100,20 @@ def start_training(character):
     print('Если не хочешь тренироваться, введи команду skip.')
     cmd = None
     commands = {
-        'attack': character.attack,
-        'defence': character.defence,
+        'attack': character.attack, 
+        'defence': character.defence, 
         'special': character.special
         }
-
+    print(commands[cmd]())
     while cmd != 'skip':
-        cmd = input('Введи команду: ').lower()
-        if cmd == 'skip':
-            print('Тренировка окончена')
-        elif cmd in commands:
-            print(commands[cmd]())
-        else:
-            print('Неизвестная команда')
-
+        cmd = input('Введи команду: ')
         # Замените блок условных операторов на словарь
         # и вынесите его из цикла. Здесь останется одно условие
         # принадлежности введённой команды словарю.
         # В функции print() будет вызываться метод класса,
         # который соответствует введённой команде.
-        
+        print(f'{game_classes[character].cmd()}')
+        print('Тренировка окончена')
 
 
 
